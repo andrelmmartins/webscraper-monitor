@@ -6,7 +6,7 @@
   "scripts": {
     "build:start": "npm run build && npm run start",
     "start": "node ./dist",
-    "build": "npx tsc --build"
+    "build": "rimraf ./dist && npx tsc --build"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/andrelmmartins/webscraper-monitor#readme",
   "devDependencies": {
+    "rimraf": "^5.0.5",
     "typescript": "^5.3.3"
   }
 }
