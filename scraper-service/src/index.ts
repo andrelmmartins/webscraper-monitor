@@ -1,11 +1,14 @@
-import ScraperList from "./schema/ScraperList";
+import express from "express";
+import cors from "cors";
 
-import GetCollegeHistory from "./scrapers/GetCollegeHistory";
-import GetJobsOnLinkedin from "./scrapers/GetJobsOnLinkedin";
+const server = express();
 
-const scrapersList = new ScraperList();
+server.use(
+  cors({
+    origin: "*",
+  })
+);
 
-scrapersList.add(new GetCollegeHistory());
-scrapersList.add(new GetJobsOnLinkedin());
-
-scrapersList.run();
+server.listen(3001, () => {
+  console.log("Scraper Service: Online");
+});
