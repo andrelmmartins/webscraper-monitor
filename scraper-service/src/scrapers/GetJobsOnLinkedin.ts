@@ -1,4 +1,4 @@
-import Scraper from "../schema/Scraper";
+import Scraper from "../model/Scraper";
 
 export default class GetJobsOnLinkedin implements Scraper {
   name = "get-jobs-on-linkedin";
