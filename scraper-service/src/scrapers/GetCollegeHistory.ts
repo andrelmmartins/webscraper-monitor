@@ -1,4 +1,4 @@
-import Scraper from "../model/Scraper";
+import Scraper from "../models/Scraper";
 
 const delay = (amount = 750) =>
   new Promise((resolve) => setTimeout(resolve, amount));

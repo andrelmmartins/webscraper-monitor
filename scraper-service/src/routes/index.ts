@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { ScraperController } from "../controller";
+import { ScraperController } from "../controllers";
 
 const router = Router();
 const controller = new ScraperController();
