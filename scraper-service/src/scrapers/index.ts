@@ -1,9 +1,5 @@
-import Scraper from "../model/Scraper";
+import Scraper from "../models/Scraper";
 
-import GetCollegeHistory from "./GetCollegeHistory";
-import GetJobsOnLinkedin from "./GetJobsOnLinkedin";
+import GitHubPinnedReposScraper from "./GitHubPinnedReposScraper";
 
-export const scrapersList: Scraper[] = [
-  new GetCollegeHistory(),
-  new GetJobsOnLinkedin(),
-];
+export const scrapersList: Scraper[] = [new GitHubPinnedReposScraper()];

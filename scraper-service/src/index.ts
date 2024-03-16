@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
 
-import { ScraperRoutes } from "./routes";
+import "./opentelemetry";
+import { ScraperRoutes } from "./routes/ScraperRoutes";
 
 const server = express();
 
