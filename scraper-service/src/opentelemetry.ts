@@ -1,17 +1,9 @@
 import { NodeSDK } from "@opentelemetry/sdk-node";
-import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-grpc";
 import { Resource } from "@opentelemetry/resources";
-import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
-import {
-  ConsoleSpanExporter,
-  NodeTracerProvider,
-  SimpleSpanProcessor,
-} from "@opentelemetry/sdk-trace-node";
-
-import { trace, metrics } from "@opentelemetry/api";
-import GitHubPinnedReposScraper from "./scrapers/GitHubPinnedReposScraper";
 import { PeriodicExportingMetricReader } from "@opentelemetry/sdk-metrics";
+import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-grpc";
 import { OTLPMetricExporter } from "@opentelemetry/exporter-metrics-otlp-grpc";
+import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
 
 const sdk = new NodeSDK({
   resource: new Resource({
@@ -31,11 +23,3 @@ const sdk = new NodeSDK({
 });
 
 sdk.start();
-
-new GitHubPinnedReposScraper().run();
-
-const meter = metrics.getMeter("teste");
-const counter = meter.createCounter("teste-counter");
-const counter2 = meter.createCounter("counter-testador");
-counter.add(1);
-counter2.add(1);
