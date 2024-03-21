@@ -1,11 +1,20 @@
-import ScraperList from "./schema/ScraperList";
+import express from "express";
+import cors from "cors";
 
-import GetCollegeHistory from "./scrapers/GetCollegeHistory";
-import GetJobsOnLinkedin from "./scrapers/GetJobsOnLinkedin";
+import "./opentelemetry";
+import "./cron";
+import { ScraperRoutes } from "./routes/ScraperRoutes";
 
-const scrapersList = new ScraperList();
+const server = express();
 
-scrapersList.add(new GetCollegeHistory());
-scrapersList.add(new GetJobsOnLinkedin());
+server.use(
+  cors({
+    origin: "*",
+  })
+);
 
-scrapersList.run();
+server.use("/scrapers", ScraperRoutes);
+
+server.listen(3012, () => {
+  console.log("Scraper Service: Online");
+});
