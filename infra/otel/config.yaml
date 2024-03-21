@@ -12,6 +12,8 @@ processors:
     send_batch_size: 1024
   resource:
     attributes:
+      - action: insert
+        value: raw
 
 extensions:
   health_check:
