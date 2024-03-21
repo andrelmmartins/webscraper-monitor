@@ -8,4 +8,4 @@ scraper-service-up:
 	cd ./scraper-service && npm run build:start
 
 monitor-up:
-	cd ./monitor && npm run dev
+	cd ./monitor && npm run build:start
