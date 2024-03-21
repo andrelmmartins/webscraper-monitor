@@ -60,7 +60,6 @@ services:
     networks:
       - telemetry
 
-  # TODO: Add default dashboards on boostrap
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
