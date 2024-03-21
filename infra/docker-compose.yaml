@@ -70,7 +70,6 @@ services:
       prometheus:
         condition: service_healthy
     volumes:
-      - ./grafana/bootstrap.ini:/etc/grafana/grafana.ini
       - ./grafana/datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
     environment:
       - GF_AUTH_ANONYMOUS_ENABLED=true
