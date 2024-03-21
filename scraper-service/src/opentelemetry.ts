@@ -7,7 +7,8 @@ import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions"
 
 const sdk = new NodeSDK({
   resource: new Resource({
-    [SemanticResourceAttributes.SERVICE_NAME]: "scraper-service-new",
+    [SemanticResourceAttributes.SERVICE_NAME]: "scraper-service",
+    [SemanticResourceAttributes.SERVICE_NAMESPACE]: "scraper",
   }),
 
   traceExporter: new OTLPTraceExporter({

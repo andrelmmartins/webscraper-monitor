@@ -1,7 +1,7 @@
-import { Browser, Builder, By } from "selenium-webdriver";
+import { By, WebDriver } from "selenium-webdriver";
 
 import Scraper from "../models/Scraper";
-import OtelSeleniumWebDriver from "../wrappers/SeleniumWebDriver";
+import InstrumentedWebDriver from "../wrappers/selenium";
 
 /**
  * @author TheDancerCodes
@@ -12,13 +12,7 @@ import OtelSeleniumWebDriver from "../wrappers/SeleniumWebDriver";
 export default class GitHubPinnedReposScraper implements Scraper {
   name = "github-pinned-repos-scraper";
 
-  async run() {
-    // let driver = await new Builder().forBrowser("chrome").build();
-    const driver = new OtelSeleniumWebDriver({
-      browser: Browser.CHROME,
-      scraperName: "teste",
-    });
-
+  async run(driver: WebDriver | InstrumentedWebDriver) {
     try {
       await driver.get("https://github.com/TheDancerCodes");
 

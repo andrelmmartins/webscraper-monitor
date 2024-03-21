@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 
 import "./opentelemetry";
+import "./cron";
 import { ScraperRoutes } from "./routes/ScraperRoutes";
 
 const server = express();
