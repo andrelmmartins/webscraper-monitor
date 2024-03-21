@@ -14,6 +14,6 @@ server.use(
 
 server.use("/scrapers", ScraperRoutes);
 
-server.listen(3001, () => {
+server.listen(3012, () => {
   console.log("Scraper Service: Online");
 });

@@ -54,5 +54,3 @@ export default class GitHubPinnedReposScraper implements Scraper {
     }
   }
 }
-
-new GitHubPinnedReposScraper().run();

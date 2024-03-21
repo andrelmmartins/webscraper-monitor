@@ -84,6 +84,7 @@ export default class OtelSeleniumWebDriver extends BaseWrapper {
       span.setStatus({ code: SpanStatusCode.ERROR });
     } finally {
       span.end();
+      this.mainSpan.end();
     }
   }
 }
