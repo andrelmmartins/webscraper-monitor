@@ -1,0 +1,55 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317 #default
+      http:
+        endpoint: 0.0.0.0:4318 #default
+
+processors:
+  batch:
+    timeout: 1s
+    send_batch_size: 1024
+  resource:
+    attributes:
+      - action: insert
+        value: raw
+
+extensions:
+  health_check:
+
+exporters:
+  prometheus:
+    endpoint: collector:6666
+  otlp:
+    endpoint: tempo:4317
+    tls:
+      insecure: true
+  logging:
+    verbosity: detailed
+
+service:
+  pipelines:
+    metrics:
+      receivers:
+        - otlp
+      processors:
+        - batch
+      exporters:
+        - prometheus
+        - logging
+    traces:
+      receivers:
+        - otlp
+      processors:
+        - batch
+      exporters:
+        - otlp
+        - logging
+  extensions: [health_check]
+
+  telemetry:
+    logs:
+      level: debug
+    metrics:
+      address: 0.0.0.0:8888
