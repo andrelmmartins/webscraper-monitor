@@ -1,15 +1,15 @@
-"use client";
+import DashboarProvider from "@/contexts/DashboardContext";
 
-import { runScrapers } from "@/service/scraper";
+import Footer from "@/components/Footer";
+import Dashboard from "@/components/Dashboard";
 
 export default function Home() {
-  const handleClickOnButton = async () => {
-    await runScrapers();
-  };
-
   return (
-    <main>
-      <button onClick={handleClickOnButton}>Call</button>
-    </main>
+    <DashboarProvider>
+      <main className="bg-white text-black">
+        <Dashboard />
+        <Footer />
+      </main>
+    </DashboarProvider>
   );
 }
