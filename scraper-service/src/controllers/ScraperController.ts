@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { Request, Response } from "express";
 import { Browser } from "selenium-webdriver";
 
@@ -5,13 +6,10 @@ import { api } from "../services/grafana";
 import { scrapersList } from "../scrapers";
 import InstrumentedDriver from "../wrappers/selenium";
 import Trace from "../models/Trace";
-import { AxiosError } from "axios";
 
 export class ScraperController {
   async run(req: Request, res: Response) {
     try {
-      res.status(200).send({});
-
       const browser = Browser.CHROME;
 
       for (const scraper of scrapersList) {
@@ -19,6 +17,8 @@ export class ScraperController {
           new InstrumentedDriver({ browser, scraperName: scraper.name })
         );
       }
+
+      return res.status(200).send({});
     } catch {
       return res.status(500).send({
         error: "something wrong happened in: run-scrapers",
@@ -26,7 +26,7 @@ export class ScraperController {
     }
   }
 
-  async executions(req: Request, res: Response) {
+  async dashboard(req: Request, res: Response) {
     try {
       const datenow = Number(Date.now().toString().slice(0, 10));
       const yesteday = datenow - 60 * 60 * 24;
@@ -41,20 +41,31 @@ export class ScraperController {
         }
       );
 
-      const parsedTraces: Trace[] = [];
+      const traces: Trace[] = [];
 
       if (data?.traces && Array.isArray(data.traces)) {
         data.traces.forEach((t: any) => {
           const parsed = Trace.parse(t);
-          if (parsed) parsedTraces.push(parsed);
+          if (parsed) traces.push(parsed);
         });
       }
 
-      return res.status(200).send(parsedTraces);
+      const scrapers = scrapersList.map((s) => ({
+        name: s.name,
+        description: s.description,
+      }));
+
+      res.status(200).send({
+        traces,
+        scrapers,
+      });
+
+      return;
     } catch (e) {
-      console.log((e as AxiosError).response?.data);
+      console.log(e);
       return res.status(500).send({
-        error: "something wrong happened in: get-traces",
+        error: "something wrong happened in: dashboard",
+        data: e,
       });
     }
   }

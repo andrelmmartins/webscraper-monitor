@@ -16,11 +16,15 @@ export default class InstrumentedWebDriver extends BaseWrapper {
       tracerName: "otel-selenium",
       mainSpan: {
         name: `selenium-scraper-${props.scraperName}`,
-        attributes: {},
+        attributes: {
+          scraper: props.scraperName,
+        },
       },
     });
 
     this.#driver = new Builder().forBrowser(props.browser).build();
+
+    this.mainSpan.setStatus({ code: SpanStatusCode.OK });
   }
 
   async get(url: string) {

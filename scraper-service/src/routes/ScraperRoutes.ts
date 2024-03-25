@@ -7,6 +7,6 @@ const controller = new ScraperController();
 
 router.post("/run/", controller.run);
 
-router.get("/dashboard/executions/", controller.executions);
+router.get("/dashboard/", controller.dashboard);
 
 export { router as ScraperRoutes };

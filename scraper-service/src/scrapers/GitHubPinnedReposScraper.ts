@@ -11,6 +11,7 @@ import InstrumentedWebDriver from "../wrappers/selenium";
 
 export default class GitHubPinnedReposScraper implements Scraper {
   name = "github-pinned-repos-scraper";
+  description = "get pinned repos from github of TheDancerCodes";
 
   async run(driver: WebDriver | InstrumentedWebDriver) {
     try {
