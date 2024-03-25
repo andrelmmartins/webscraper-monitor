@@ -3,4 +3,16 @@
 @tailwind utilities;
 
 @layer utilities {
+  *::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #c4c3bf;
+  }
+
+  *::-webkit-scrollbar-track {
+    background-color: #f2f0eb;
+  }
 }

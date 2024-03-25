@@ -1,31 +1,28 @@
 "use client";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 import * as service from "@/service/scraper";
-import { Execution } from "@/model/Execution";
+import { DashboardData } from "@/model/Dashboard";
 
 interface Props {
-  executions: Execution[];
+  data: DashboardData;
 
   loading: boolean;
   loadData: () => Promise<void>;
 
-  run: () => Promise<void>;
+  run: (onConclude: () => void) => Promise<void>;
 }
 
 const DashboardContext = createContext({} as Props);
 
 export default function DashboarProvider(props: { children: React.ReactNode }) {
-  const [loading, setLoading] = useState(false);
-  const [executions, setExecutions] = useState<Execution[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<DashboardData>({ scrapers: [], traces: [] });
 
-  async function getExecutions() {
+  async function getData() {
     try {
-      const { data } = await service.getExecutions<Execution[]>();
-
-      if (data && Array.isArray(data)) {
-        setExecutions(data);
-      }
+      const { data } = await service.getData<DashboardData>();
+      return data;
     } catch {
       console.log("houve algum erro");
     }
@@ -33,22 +30,33 @@ export default function DashboarProvider(props: { children: React.ReactNode }) {
 
   async function loadData() {
     setLoading(true);
-    await getExecutions();
-    setLoading(false);
+    const data = await getData();
+    setTimeout(() => {
+      setLoading(false);
+      if (data) {
+        setData(data);
+      }
+    }, 3000);
   }
 
-  async function run() {
+  async function run(onConclude: () => void) {
     try {
       await service.runScrapers();
     } catch {
       console.log("houve algum erro");
+    } finally {
+      setTimeout(async () => {
+        const data = await getData();
+        if (data) setData(data);
+        onConclude();
+      }, 10000);
     }
   }
 
   return (
     <DashboardContext.Provider
       value={{
-        executions,
+        data,
 
         loading,
         loadData,

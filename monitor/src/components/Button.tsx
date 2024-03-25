@@ -26,7 +26,7 @@ export default function Button({
     >
       {children}
       {icon && !loading && <Icon id={icon} className="h-4 w-4" />}
-      {loading && <Icon id="progress" className="h-4 w-4" />}
+      {loading && <Icon id="progress" className="h-4 w-4 animate-spin" />}
     </button>
   );
 }

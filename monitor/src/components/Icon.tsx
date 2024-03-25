@@ -1,5 +1,13 @@
 export interface Props {
-  id: "reload" | "progress" | "play" | "code";
+  id:
+    | "reload"
+    | "progress"
+    | "play"
+    | "code"
+    | "clock"
+    | "box"
+    | "terminal"
+    | "close";
   className?: HTMLElement["className"];
 }
 
