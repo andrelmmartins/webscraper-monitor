@@ -70,6 +70,7 @@ export class ScraperController {
 
       res.status(200).send({
         traces,
+        instances: instances.list(),
         scrapers,
       });
 
