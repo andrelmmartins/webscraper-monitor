@@ -67,7 +67,7 @@ export class ScraperInstanceController {
     try {
       const { id } = req.params;
 
-      if (!id) {
+      if (id) {
         service.remove(id);
         return res.status(200).send({});
       }
