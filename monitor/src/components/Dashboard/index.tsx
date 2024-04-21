@@ -1,7 +1,7 @@
 import Traces from "./sections/Traces";
 import Counts from "./sections/Counts";
 import Title from "./sections/Title";
-import Scrapers from "./sections/Scrapers";
+import Scrapers from "./sections/scrapers";
 
 export default function Dashboard() {
   return (

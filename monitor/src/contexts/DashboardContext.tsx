@@ -2,7 +2,12 @@
 import { createContext, useContext, useState } from "react";
 
 import * as service from "@/service/scraper";
-import { DashboardData } from "@/model/Dashboard";
+import {
+  DashboardData,
+  ScraperInstance,
+  Trace,
+  TraceDetail,
+} from "@/model/Dashboard";
 
 interface Props {
   data: DashboardData;
@@ -11,13 +16,21 @@ interface Props {
   loadData: () => Promise<void>;
 
   run: (onConclude: () => void) => Promise<void>;
+
+  detailTrace: (trace: Trace) => Promise<TraceDetail | undefined>;
+
+  createInstance: (props: Omit<ScraperInstance, "id">) => Promise<void>;
 }
 
 const DashboardContext = createContext({} as Props);
 
 export default function DashboarProvider(props: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState<DashboardData>({ scrapers: [], traces: [] });
+  const [data, setData] = useState<DashboardData>({
+    scrapers: [],
+    traces: [],
+    instances: [],
+  });
 
   async function getData() {
     try {
@@ -53,6 +66,23 @@ export default function DashboarProvider(props: { children: React.ReactNode }) {
     }
   }
 
+  async function detailTrace(trace: Trace) {
+    try {
+      const { data } = await service.getTraceDetails(trace.id);
+      return data;
+    } catch {
+      console.log("houve algum erro");
+    }
+  }
+
+  async function createInstance(props: Omit<ScraperInstance, "id">) {
+    try {
+      await service.createInstance(props);
+    } catch {
+      console.log("houve algum erro");
+    }
+  }
+
   return (
     <DashboardContext.Provider
       value={{
@@ -62,6 +92,10 @@ export default function DashboarProvider(props: { children: React.ReactNode }) {
         loadData,
 
         run,
+
+        detailTrace,
+
+        createInstance,
       }}
     >
       {props.children}

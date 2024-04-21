@@ -11,7 +11,11 @@ export interface Props {
 
 export default function Card(props: Props) {
   return (
-    <div className="rounded-lg bg-white border border-gray-light p-6 relative w-full min-w-[200px] flex-1">
+    <div
+      className={`rounded-lg bg-white border border-gray-light ${
+        props.small ? "p-4" : "p-6"
+      } relative w-full min-w-[200px] flex-1`}
+    >
       {props.title && (
         <h3 className={`${props.small ? "text-md" : "text-lg"} font-medium`}>
           {props.title}

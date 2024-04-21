@@ -3,16 +3,51 @@
 @tailwind utilities;
 
 @layer utilities {
-  *::-webkit-scrollbar {
+  * ::-webkit-scrollbar {
     width: 5px;
     height: 5px;
   }
 
-  *::-webkit-scrollbar-thumb {
+  * ::-webkit-scrollbar-thumb {
     background-color: #c4c3bf;
   }
 
-  *::-webkit-scrollbar-track {
+  * ::-webkit-scrollbar-track {
     background-color: #f2f0eb;
+  }
+
+  dialog > div ::-webkit-scrollbar-thumb {
+    border-left: 3px solid #f2f0eb;
+  }
+
+  #dropdown ::-webkit-scrollbar-thumb {
+    background-color: #969592;
+  }
+
+  #dropdown ::-webkit-scrollbar-track {
+    background-color: #DBD9D5;
+  }
+
+  *:focus {
+    border: 0;
+    outline: 0;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+      -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+      background-color: transparent;
+      transition: background-color 5000s ease-in-out 0s;
+  }
+
+  input:-moz-autofill {
+      background-color: transparent !important;
+      color: inherit !important;
+  }
+
+  input:-ms-input-placeholder {
+      background-color: transparent !important;
+      color: inherit !important;
   }
 }

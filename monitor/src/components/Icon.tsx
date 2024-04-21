@@ -7,7 +7,8 @@ export interface Props {
     | "clock"
     | "box"
     | "terminal"
-    | "close";
+    | "close"
+    | "arrow";
   className?: HTMLElement["className"];
 }
 

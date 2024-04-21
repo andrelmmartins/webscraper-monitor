@@ -1,29 +1,21 @@
 "use client";
-
 import { useState } from "react";
 
 import { useDashboard } from "@/contexts/DashboardContext";
-import { Scraper } from "@/model/Dashboard";
 import { asTime, miliToSeconds } from "@/utils/transformers";
+import { Scraper } from "@/model/Dashboard";
 import Modal from "@/components/Modal";
 import Icon from "@/components/Icon";
-import { Count } from "./Counts";
 
-export default function Scrapers() {
+import { Count } from "../Counts";
+
+export default function ScraperList() {
   const { data } = useDashboard();
-
   const [scraper, setScraper] = useState<Scraper>();
 
   return (
-    <section className="flex flex-col gap-2">
-      <ScraperModal scraper={scraper} onClose={() => setScraper(undefined)} />
-      <h2 className="text-xl my-4 font-semibold">Scrapers</h2>
-      <div className="text-sm font-medium bg-gray pt-5 pb-6 px-10 text-gray-medium-dark flex -mb-7 rounded-t-lg">
-        <p style={{ width: "25%" }}>Nome</p>
-        <p style={{ width: "45%" }}>Descrição</p>
-        <p style={{ width: "15%" }}>Descrição Média</p>
-      </div>
-      <div className="flex flex-col gap-2 bg-gray p-4 rounded-b-lg">
+    <>
+      <div className="flex flex-col gap-2 bg-gray p-4">
         {data.scrapers.map((s, i) => {
           const tracesOfThisScraper = data.traces.filter(({ name }) =>
             name.includes(s.name)
@@ -62,11 +54,15 @@ export default function Scrapers() {
           );
         })}
       </div>
-    </section>
+      <ScraperInstanceModal
+        scraper={scraper}
+        onClose={() => setScraper(undefined)}
+      />
+    </>
   );
 }
 
-function ScraperModal(props: {
+function ScraperInstanceModal(props: {
   scraper: Scraper | undefined;
   onClose: () => void;
 }) {
@@ -104,7 +100,7 @@ function ScraperModal(props: {
             {props.scraper?.description}
           </p>
         </div>
-        <div>
+        <div className="flex gap-2">
           <Count
             title="Total de execuções"
             count={tracesOfThisScraper.length}

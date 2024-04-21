@@ -8,6 +8,7 @@ export interface Props {
   children: React.ReactNode;
 
   title: string;
+  subtitle?: string;
 }
 
 export default function Modal(props: Props) {
@@ -35,13 +36,18 @@ export default function Modal(props: Props) {
 
       <div className="z-[10] bg-white p-6 rounded-lg border border-gray-light w-full max-w-[500px]">
         <div className="flex justify-between items-center pb-6 border-b border-b-gray mb-6">
-          <h3 className="text-2xl font-bold tracking-tight">Dashboard</h3>
+          <div>
+            <h3 className="text-2xl font-bold tracking-tight">{props.title}</h3>
+            {props.subtitle && (
+              <p className="text-xs text-gray-medium-dark">{props.subtitle}</p>
+            )}
+          </div>
           <Button onClick={props.onClose} className="!p-2 ">
             <Icon id="close" className="h-5 w-5" />
           </Button>
         </div>
 
-        <div className="w-[calc(100% + 5px)] -mr-[5px] overflow-y-scroll flex flex-col gap-4">
+        <div className="w-[calc(100% + 5px)] -mr-[5px] h-full max-h-[475px] overflow-y-scroll flex flex-col gap-4">
           {props.children}
         </div>
       </div>
