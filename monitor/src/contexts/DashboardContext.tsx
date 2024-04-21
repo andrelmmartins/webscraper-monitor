@@ -79,7 +79,7 @@ export default function DashboarProvider(props: { children: React.ReactNode }) {
   async function createInstance(props: Omit<ScraperInstance, "id">) {
     try {
       await service.createInstance(props);
-      await delay(1000);
+      await delay(3000);
       await loadData();
     } catch {
       console.log("houve algum erro");
@@ -89,7 +89,7 @@ export default function DashboarProvider(props: { children: React.ReactNode }) {
   async function deleteInstance(id: ScraperInstance["id"]) {
     try {
       await service.deleteInstance(id);
-      await delay(1000);
+      await delay(3000);
       await loadData();
     } catch {
       console.log("houve algum erro");
