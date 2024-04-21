@@ -16,7 +16,7 @@ interface Data {
   scrapers: ScraperDataID[];
 }
 
-const filePath = "../database/scrapers.json";
+const filePath = "./src/database/scrapers.json";
 
 const readData = (): Data => {
   try {

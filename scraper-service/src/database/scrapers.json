@@ -1,3 +1,1 @@
-{
-  "scrapers": []
-}
+{"scrapers":[{"name":"github-pinned-repos-scraper","props":{"username":"andrelmmartins"},"id":"e138c579-912e-487a-9d54-028715d04806"},{"name":"github-pinned-repos-scraper","props":{"username":"123"},"id":"3e71a14e-02ad-4106-b52b-490aa8142146"},{"name":"github-pinned-repos-scraper","props":{"username":"TheDancerCodes"},"id":"dfce0cdc-6892-461e-a01a-0105619cd123"}]}

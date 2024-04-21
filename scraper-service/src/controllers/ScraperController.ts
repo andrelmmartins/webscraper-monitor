@@ -8,16 +8,14 @@ import Trace from "../models/Trace";
 import { TraceDetailResponse } from "../services/traceDetail";
 import { ScraperInstanceController } from "./ScraperInstanceController";
 
-const instances = new ScraperInstanceController();
-
 export class ScraperController {
   async run(req: Request, res: Response) {
     try {
-      instances.list().forEach(({ name, id, props }) => {
-        const instance = instances.find(name);
+      ScraperInstanceController.list().forEach(({ name, id, props }) => {
+        const instance = ScraperInstanceController.find(name);
 
         if (instance) {
-          instances.run(
+          ScraperInstanceController.run(
             instance,
             props,
             new InstrumentedWebDriver({
@@ -70,7 +68,7 @@ export class ScraperController {
 
       res.status(200).send({
         traces,
-        instances: instances.list(),
+        instances: ScraperInstanceController.list(),
         scrapers,
       });
 

@@ -8,6 +8,7 @@ import { ScraperRoutes } from "./routes/ScraperRoutes";
 
 const server = express();
 
+server.use(express.json());
 server.use(
   cors({
     origin: "*",

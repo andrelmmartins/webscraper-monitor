@@ -7,27 +7,30 @@ import Scraper, { ScraperProps } from "../models/Scraper";
 import InstrumentedWebDriver from "../wrappers/selenium";
 
 export class ScraperInstanceController {
-  list() {
+  constructor() {}
+
+  static list = () => {
     return service.read().scrapers;
-  }
+  };
 
-  find(name: string) {
+  static find = (name: string) => {
     return scrapersList.find((s) => s.name === name);
-  }
+  };
 
-  run(
+  static run = (
     scraper: Scraper,
     props: ScraperProps,
     driver: WebDriver | InstrumentedWebDriver
-  ) {
-    if (this.hasAllProps(scraper, props)) {
+  ) => {
+    if (ScraperInstanceController.hasAllProps(scraper, props)) {
       scraper.run(driver, props);
     }
-  }
+  };
 
-  hasAllProps(scraper: Scraper, props: ScraperProps) {
+  static hasAllProps(scraper: Scraper, props: ScraperProps) {
     const necessaryProps = scraper.necessaryProps();
-    return !!Object.keys(necessaryProps).every(([name]) => props[name]);
+
+    return Object.keys(necessaryProps).every((name) => props[name]);
   }
 
   async create(req: Request, res: Response) {
@@ -37,13 +40,13 @@ export class ScraperInstanceController {
       if (
         name &&
         props &&
-        typeof name !== "string" &&
-        typeof props !== "object"
+        typeof name === "string" &&
+        typeof props === "object"
       ) {
-        const scraper = this.find(name);
-        if (scraper && this.hasAllProps(scraper, props)) {
-          service.add({ name, props });
+        const scraper = ScraperInstanceController.find(name);
 
+        if (scraper && ScraperInstanceController.hasAllProps(scraper, props)) {
+          service.add({ name, props });
           return res.status(200).send({});
         }
       }
@@ -86,12 +89,13 @@ export class ScraperInstanceController {
       const { id } = req.params;
 
       if (!id) {
-        const instances = this.list();
+        const instances = ScraperInstanceController.list();
         const instance = instances.find((s) => s.id === id);
-        const scraper = instance && this.find(instance.name);
+        const scraper =
+          instance && ScraperInstanceController.find(instance.name);
 
         if (scraper) {
-          this.run(
+          ScraperInstanceController.run(
             scraper,
             instance.props,
             new InstrumentedWebDriver({
