@@ -65,6 +65,7 @@ export class ScraperController {
       const scrapers = scrapersList.map((s) => ({
         name: s.name,
         description: s.description,
+        props: s.necessaryProps(),
       }));
 
       res.status(200).send({
