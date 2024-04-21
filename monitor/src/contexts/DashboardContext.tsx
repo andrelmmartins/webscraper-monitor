@@ -20,9 +20,13 @@ interface Props {
   detailTrace: (trace: Trace) => Promise<TraceDetail | undefined>;
 
   createInstance: (props: Omit<ScraperInstance, "id">) => Promise<void>;
+  deleteInstance: (id: ScraperInstance["id"]) => Promise<void>;
 }
 
 const DashboardContext = createContext({} as Props);
+
+const delay = (amount = 750) =>
+  new Promise((resolve) => setTimeout(resolve, amount));
 
 export default function DashboarProvider(props: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
@@ -44,12 +48,9 @@ export default function DashboarProvider(props: { children: React.ReactNode }) {
   async function loadData() {
     setLoading(true);
     const data = await getData();
-    setTimeout(() => {
-      setLoading(false);
-      if (data) {
-        setData(data);
-      }
-    }, 3000);
+    await delay(3000);
+    setLoading(false);
+    if (data) setData(data);
   }
 
   async function run(onConclude: () => void) {
@@ -78,6 +79,18 @@ export default function DashboarProvider(props: { children: React.ReactNode }) {
   async function createInstance(props: Omit<ScraperInstance, "id">) {
     try {
       await service.createInstance(props);
+      await delay(1000);
+      await loadData();
+    } catch {
+      console.log("houve algum erro");
+    }
+  }
+
+  async function deleteInstance(id: ScraperInstance["id"]) {
+    try {
+      await service.deleteInstance(id);
+      await delay(1000);
+      await loadData();
     } catch {
       console.log("houve algum erro");
     }
@@ -96,6 +109,7 @@ export default function DashboarProvider(props: { children: React.ReactNode }) {
         detailTrace,
 
         createInstance,
+        deleteInstance,
       }}
     >
       {props.children}

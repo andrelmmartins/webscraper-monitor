@@ -29,7 +29,7 @@ export default function CreateModal(props: {
 
     if (!error && template) {
       setLoading(true);
-      createInstance({ name: template.name, props: scraperProps });
+      await createInstance({ name: template.name, props: scraperProps });
       setLoading(false);
       handleClose();
     }
@@ -99,6 +99,7 @@ export default function CreateModal(props: {
         <div className="flex flex-col gap-2">
           <Button
             onClick={onSubmit}
+            loading={loading}
             type="submit"
             className="w-full h-12 justify-center"
           >
@@ -106,8 +107,9 @@ export default function CreateModal(props: {
           </Button>
           <Button
             type="button"
+            disabled={loading}
             onClick={handleClose}
-            className="bg-white !text-gray-darker w-full h-12 justify-center hover:bg-gray"
+            className="!bg-white !text-gray-darker w-full h-12 justify-center hover:!bg-gray"
           >
             Cancelar
           </Button>

@@ -22,5 +22,5 @@ export const createInstance = async (props: Omit<ScraperInstance, "id">) => {
 };
 
 export const deleteInstance = async (id: ScraperInstance["id"]) => {
-  return api.delete(`/:id/`);
+  return api.delete(`/${id}/`);
 };
