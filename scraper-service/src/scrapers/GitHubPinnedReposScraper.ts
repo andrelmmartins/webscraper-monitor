@@ -13,9 +13,12 @@ export default class GitHubPinnedReposScraper implements Scraper {
   name = "github-pinned-repos-scraper";
   description = "get pinned repos from github of TheDancerCodes";
 
-  async run(driver: WebDriver | InstrumentedWebDriver) {
+  async run(
+    driver: WebDriver | InstrumentedWebDriver,
+    props: { username: string }
+  ) {
     try {
-      await driver.get("https://github.com/TheDancerCodes");
+      await driver.get(`https://github.com/${props.username}`);
 
       // Get all of the titles for the pinned repositories
       let titles_element = await driver.findElements(By.css("a.text-bold"));
@@ -50,6 +53,8 @@ export default class GitHubPinnedReposScraper implements Scraper {
   }
 
   necessaryProps() {
-    return {};
+    return {
+      username: "",
+    };
   }
 }
