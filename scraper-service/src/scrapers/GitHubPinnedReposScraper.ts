@@ -48,4 +48,8 @@ export default class GitHubPinnedReposScraper implements Scraper {
       await driver.quit();
     }
   }
+
+  necessaryProps() {
+    return {};
+  }
 }

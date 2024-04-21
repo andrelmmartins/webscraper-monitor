@@ -1,9 +1,11 @@
 import fs from "fs";
 import { v4 as uuid } from "uuid";
 
+import { ScraperProps } from "../models/Scraper";
+
 interface ScraperData {
   name: string;
-  [key: string]: string;
+  props: ScraperProps;
 }
 
 interface ScraperDataID extends ScraperData {
@@ -38,9 +40,11 @@ export const service = {
     writeData(data);
   },
 
-  remove: (scraper: ScraperDataID) => {
+  remove: (instanceID: ScraperDataID["id"]) => {
     const data = readData();
-    data.scrapers = data.scrapers.filter((s) => s.id !== scraper.id);
+    data.scrapers = data.scrapers.filter((s) => s.id !== instanceID);
     writeData(data);
   },
+
+  read: readData,
 };

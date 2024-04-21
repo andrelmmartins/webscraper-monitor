@@ -2,27 +2,36 @@ import { SpanStatusCode } from "@opentelemetry/api";
 import { WebDriver, Builder, Locator, WebElement } from "selenium-webdriver";
 
 import BaseWrapper from "./base";
+import { ScraperProps } from "../models/Scraper";
 
-export interface InstrumentedWebDriverProps {
+export interface InstrumentedWebDriverProps extends ScraperProps {
   scraperName: string;
+  instanceID: string;
   browser: string;
 }
 
 export default class InstrumentedWebDriver extends BaseWrapper {
   #driver: WebDriver;
 
-  constructor(props: InstrumentedWebDriverProps) {
+  constructor({
+    scraperName,
+    instanceID,
+    browser,
+    ...scraperProps
+  }: InstrumentedWebDriverProps) {
     super({
       tracerName: "otel-selenium",
       mainSpan: {
-        name: `selenium-scraper-${props.scraperName}`,
+        name: `selenium-scraper-${scraperName}`,
         attributes: {
-          scraper: props.scraperName,
+          scraper: scraperName,
+          instance: instanceID,
+          ...scraperProps,
         },
       },
     });
 
-    this.#driver = new Builder().forBrowser(props.browser).build();
+    this.#driver = new Builder().forBrowser(browser).build();
 
     this.mainSpan.setStatus({ code: SpanStatusCode.OK });
   }
